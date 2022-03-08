@@ -1,12 +1,12 @@
 FROM openjdk:11
 
-RUN mkdir /deployments
+RUN mkdir /home/student/deployments
 
-ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+#ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 # We make four distinct layers so if there are application changes the library layers can be re-used
 
-COPY target/*.jar /deployments/
+COPY target/*.jar /home/student/deployments/
 
 EXPOSE 8080
 
-ENTRYPOINT [ "java", "-jar",  "/deployments/helloworldservice-1.0-SNAPSHOT-runner.jar" ]
+ENTRYPOINT [ "java", "-jar",  "/home/student/deployments/helloworldservice-1.0-SNAPSHOT-runner.jar" ]
