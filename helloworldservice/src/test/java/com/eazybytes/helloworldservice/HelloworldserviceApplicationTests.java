@@ -1,13 +1,14 @@
-package com.eazybytes.accounts;
+package com.eazybytes.helloworldservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AccountsApplicationTests {
+class HelloworldserviceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 }
