@@ -1,4 +1,13 @@
-#Start with a base image containing Java runtime
-FROM openjdk:11-slim
-COPY ./target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
-CMD ["java","-jar","helloworldservice-0.0.1-SNAPSHOT.jar"]
+# Build the application first using Maven
+FROM maven:3.8-openjdk-11 as build
+WORKDIR /app
+COPY . .
+RUN mvn install
+
+# Inject the JAR file into a new container to keep the file small
+FROM openjdk:8-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/hello-java-spring-boot-*.jar /app/app.jar
+EXPOSE 8080
+ENTRYPOINT ["sh", "-c"]
+CMD ["java -jar app.jar"]
