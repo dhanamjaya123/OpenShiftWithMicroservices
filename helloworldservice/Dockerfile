@@ -1,11 +1,18 @@
 #Start with a base image containing Java runtime
-FROM openjdk:11-slim as build
+FROM openjdk:11-slim
 
-#Information around who maintains the image
-MAINTAINER eazybytes.com
+ARG JAR_FILE=target/helloworldservice.jar
+ARG JAR_LIB_FILE=target/lib/
 
-# Add the application's jar to the container
-COPY target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
+# cd /usr/local/runme
+WORKDIR /usr/local/runme
 
-#execute the application
-ENTRYPOINT ["java","-jar","/helloworldservice-0.0.1-SNAPSHOT.jar"]
+# copy target/find-links.jar /usr/local/runme/helloworldservice.jar
+COPY ${JAR_FILE} helloworldservice.jar
+
+# copy project dependencies
+# cp -rf target/lib/  /usr/local/runme/lib
+ADD ${JAR_LIB_FILE} lib/
+
+# java -jar /usr/local/runme/app.jar
+ENTRYPOINT ["java","-jar","helloworldservice.jar"]
