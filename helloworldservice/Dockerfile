@@ -1,11 +1,17 @@
-#Start with a base image containing Java runtime
-FROM openjdk:11-slim as build
+FROM alpine:latest AS build
+ENV JAVA_HOME /opt/jdk/jdk-18
+ENV PATH $JAVA_HOME/bin:$PATH
 
-#Information around who maintains the image
-MAINTAINER eazybytes.com
+ADD https://download.java.net/java/early_access/alpine/11/binaries/openjdk-18-ea+11_linux-x64-musl_bin.tar.gz /opt/jdk/
+RUN tar -xzvf /opt/jdk/openjdk-18-ea+11_linux-x64-musl_bin.tar.gz -C /opt/jdk/
+RUN ["jlink", "--compress=2", \
+     "--module-path", "/opt/jdk/jdk-18/jmods/", \
+     "--add-modules", "java.base,java.logging,java.naming,java.xml,java.desktop,jdk.httpserver,jdk.unsupported,java.security.jgss", \
+     "--no-header-files", "--no-man-pages", \
+     "--output", "/springboot-runtime"]
 
-# Add the application's jar to the container
-#COPY target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
-
-#execute the application
-ENTRYPOINT ["java","-jar","/helloworldservice-0.0.1-SNAPSHOT.jar"]
+FROM alpine:latest
+COPY --from=build  /springboot-runtime /opt/jdk
+ENV PATH=$PATH:/opt/jdk/bin
+COPY ../target/helloworldservice-1.0-SNAPSHOT.jar /opt/app/
+CMD ["java", "-showversion", "-jar", "/opt/app/helloworldservice-1.0-SNAPSHOT.jar"]
