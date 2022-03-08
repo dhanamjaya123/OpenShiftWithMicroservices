@@ -1,10 +1,11 @@
-FROM openjdk:11
+#Start with a base image containing Java runtime
+FROM openjdk:11-slim as build
 
-#ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-# We make four distinct layers so if there are application changes the library layers can be re-used
+#Information around who maintains the image
+MAINTAINER eazybytes.com
 
-COPY target/*.jar /home/student/deployments/
+# Add the application's jar to the container
+COPY target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
 
-EXPOSE 8080
-
-ENTRYPOINT [ "java", "-jar",  "/home/student/deployments/helloworldservice-1.0-SNAPSHOT-runner.jar" ]
+#execute the application
+ENTRYPOINT ["java","-jar","/helloworldservice-0.0.1-SNAPSHOT.jar"]
