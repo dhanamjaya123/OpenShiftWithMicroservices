@@ -1,7 +1,5 @@
 FROM openjdk:11
 
-RUN mkdir /home/student/deployments
-
 #ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 # We make four distinct layers so if there are application changes the library layers can be re-used
 
