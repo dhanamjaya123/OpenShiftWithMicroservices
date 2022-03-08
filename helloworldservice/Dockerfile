@@ -5,7 +5,7 @@ FROM openjdk:11-slim as build
 MAINTAINER eazybytes.com
 
 # Add the application's jar to the container
-COPY target/accounts-0.0.1-SNAPSHOT.jar accounts-0.0.1-SNAPSHOT.jar
+COPY target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
 
 #execute the application
-ENTRYPOINT ["java","-jar","/accounts-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/helloworldservice-0.0.1-SNAPSHOT.jar"]
