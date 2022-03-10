@@ -1,4 +1,4 @@
-FROM helloworldservice/maven
+FROM openjdk:11-slim as build
 
 WORKDIR /app
 
