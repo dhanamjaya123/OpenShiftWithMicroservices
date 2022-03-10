@@ -1,11 +1,12 @@
-#Start with a base image containing Java runtime
-FROM openjdk:11-slim as build
+FROM helloworldservice/maven
 
-#Information around who maintains the image
-MAINTAINER eazybytes.com
+WORKDIR /app
 
-# Add the application's jar to the container
-COPY target/helloworldservice-0.0.1-SNAPSHOT.jar helloworldservice-0.0.1-SNAPSHOT.jar
+COPY .  .
 
-#execute the application
-ENTRYPOINT ["java","-jar","/helloworldservice-0.0.1-SNAPSHOT.jar"]
+RUN mvn package && \
+    mv target/helloworldservice-jar-with-dependencies.jar /run/helloworldservice.jar && \
+    rm -rf /app/*
+
+
+CMD java  -jar /run/helloworldservice.jar
