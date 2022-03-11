@@ -61,8 +61,8 @@ objects:
       source:
         contextDir: helloworldservice
         git:
-          ref: master
-          uri: "https://github.com/dhanamjaya123/OpenShiftWithMicroservices.git"
+          ref: ${GIT_REF}
+          uri: ${GIT_REPOSITORY}
         type: Git
       strategy:
         sourceStrategy:
